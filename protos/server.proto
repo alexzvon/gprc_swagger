@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package v1;
+
+option go_package = "/home/zvonlexa/project/poligon/gprc_swagger/gen/go/grpc/calendar/v1";
+
+import "google/api/annotations.proto";
+
+service GRPCServer {
+    rpc CreateEvent(Event) returns (ResultResponse) {}
+    rpc UpdateEvent(UpdateRequest) returns (ErrorResponse) {}
+    rpc DeleteEvent(IDEvent) returns (ErrorResponse) {}
+    rpc ListEventsToDay(DataRequest) returns (EventsResponse) {}
+    rpc ListEventsToWeek(DataRequest) returns (EventsResponse) {}
+    rpc ListEventsToMonth(DataRequest) returns (EventsResponse) {}
+}
+
+message IDEvent {
+    uint64 id = 1;
+}
+
+message Event {
+    uint64 id = 1;
+    string title = 2;
+    uint64 start_time = 3;
+    uint64 end_time = 4;
+    string description = 5;
+    uint64 user_id = 6;
+    uint64 notification_time = 7;
+}
+
+message UpdateEvent {
+    string title = 1;
+    uint64 start_time = 2;
+    uint64 end_time = 3;
+    string description = 4;
+    uint64 user_id = 5;
+    uint64 notification_time = 6;
+}
+
+message ErrorEvent {
+    string msg = 1;
+}
+
+message ErrorResponse {
+    ErrorEvent error = 1;
+}
+
+message DataRequest {
+    uint64 data = 1;
+}
+
+message UpdateRequest {
+    IDEvent id = 1;
+    UpdateEvent event = 2;
+}
+
+message EventsResponse {
+    repeated Event event = 1;
+}
+
+message ResultResponse {
+    IDEvent id = 1;
+    ErrorEvent result = 2;
+}
